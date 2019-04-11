@@ -33,6 +33,7 @@
 <div class="wrapper container-fluid">
     {!! Form::open(['url'=>route('imagesAdd'),'class'=>'form-horizontal', 'method' =>'POST','enctype'=>'multipart/from-data','files'=>true]) !!}
 
+
     <div class="form-group">
         {!! Form::label('name','Назва:',['class' =>'col-xs-02 control-label']) !!}
         <div class="col-xs-8">
@@ -68,12 +69,22 @@
         </div>
     </div>
 
-    {!! Form::open(['url'=>route('imagesAdd'),'class'=>'form']) !!}
-    <p><b>Вибір водяного знаку:</b></p>
-    <p><label><input type="radio" name="my_radio" value="1" checked>Зображення</label><Br>
-        <label><input type="radio" name="my_radio" value="2">Текст</label></p><Br>
-        <Br>
-    {!! Form::close() !!}
+    <div class="form-group">
+        {!! Form::open(['url'=>route('imagesAdd'), 'method' =>'POST']) !!}
+        <b>Виберіть розмір тексту:</b>
+        <b><select  name="size">
+            <option  value="10">10</option>
+            <option  value="15">15</option>
+            <option  value="20">20</option>
+            <option  value="25">25</option>
+            <option  value="30">30</option>
+            <option  value="35">35</option>
+            <option  value="40">40</option>
+            </select>
+        </b>
+        {!! Form::close() !!}
+    </div>
+
 
     {!! Form::close() !!}
 
