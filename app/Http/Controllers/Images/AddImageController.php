@@ -16,11 +16,6 @@ use stdClass;
 class AddImageController extends Controller
 {
 
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
-     */
     public function execute(Request $request){
 
 
@@ -38,244 +33,70 @@ class AddImageController extends Controller
                 'text' => 'required|max:255',
             ],$messages);
 
-
             if ($validator->fails()){
                 return redirect()->route('imagesAdd')->withErrors($validator)->withInput();
             }
 
-
             $path = public_path().'/img';
-
             $file = $request->file('images');
-
             $filename =  $file->getClientOriginalName();
 
-            $imaGE = imageCreateFromJpeg($input['images']);
+            /*$imaGE = imageCreateFromJpeg($input['images']);
             $width = imagesx($imaGE);
             $height = imagesy($imaGE);
-            for($x = 0; $x < $width; $x++) {//0-450 px.
-                $y = $height / 2;//175 px.
-                // pixel color at (x, y)
-                $color = imagecolorat($imaGE, $x, $y);
-            }
 
-            $red = ($color >> 16) & 0xFF;
-            $green = ($color >> 8) & 0xFF;
-            $blue = $color & 0xFF;
-            "RGB($red, $green, $blue)";
-            // imageDestroy($imaGE);
+            for($x = 0; $x <= $width; $x+=23) {//0-450 px.
+                for( $y = $height / 2; $y<$height;){
+                    $width[$x];
+                    $height[$y];
+                }//225 px.
+            }*/
 
-            $mysize = 40;
-            if (Input::get('size') === '10'){$mysize = 10;}
-            elseif (Input::get('size') === '15'){$mysize = 15;}
-            elseif (Input::get('size') === '20'){$mysize = 20;}
-            elseif (Input::get('size') === '25'){$mysize = 25;}
-            elseif (Input::get('size') === '30'){$mysize = 30;}
-            elseif (Input::get('size') === '35'){$mysize = 35;}
-            elseif (Input::get('size') === '40'){$mysize = 40;}
-            //else {$mysize = 50;}
 
-            //['red'] == 197 and $arr_col['green'] == 197 and $arr_col['blue'] == 197
-            $color = 1 - ( 0.299 * $red + 0.587 * $green + 0.114 * $blue)/255;
-
+            $mysize = (integer)Input::get('size') ?? 40;
             $str = $input['text'];
             $strArray = str_split($str);
-           // dd($strArray);
-            foreach ($strArray as $item => $value){
-              // dd($item . '-' . $value);
-                for ($item; $item<=30 ;$item++ ){
-
-                    if ($color < 0.5) {// СВІТЛЕ
-
-                        $img = Image::make($file)
-                            ->resize(300, 300);
-                        // if ($color < 0.5){
-                        $img ->text($value ,$img->width() / 2 - 138, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text( $value  ,$img->width() / 2 - 116, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(  $value  ,$img->width() / 2 - 92, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text( $value  ,$img->width() / 2 - 70, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $value ,$img->width() / 2 -46, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });
-
-                        $img ->text(   $value ,$img->width() / 2 -24, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $value ,$img->width() / 2 + 0, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(  $value ,$img->width() / 2 + 22, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $value ,$img->width() / 2 + 46, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $value ,$img->width() / 2 + 68, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $value ,$img->width() / 2 + 92, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $value ,$img->width() / 2 + 114, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $value ,$img->width() / 2 + 138, $img->height() / 2 - 8, function ($font) use ($mysize) {//13
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });//2 string
-                            break;
-                        /*$img ->text(   $item,$img->width() / 2 -138, $img->height() / 2 +23 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 -114, $img->height() / 2 +22 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 -93, $img->height() / 2 +22- 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 -68, $img->height() / 2 +22 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 -47, $img->height() / 2 +22 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 -23, $img->height() / 2 +22 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 -1, $img->height() / 2 +22 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 +24, $img->height() / 2 +22- 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 + 45, $img->height() / 2 +22 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 + 69, $img->height() / 2 +22 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 + 91, $img->height() / 2 +22- 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 + 115, $img->height() / 2 +22 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });$img ->text(   $item,$img->width() / 2 + 137, $img->height() / 2 +22 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#000000');
-                            $font->align('center');
-                            $font->valign('top');
-                        });*/
-                        //}
-                        $img->save($path.'/'.$filename);
-                    }else {// ТЕМНЕ ФОТО
-                        $img = Image::make($file)
-                            ->resize(300, 300);
-                        $img ->text($item->$value ,$img->width() / 2, $img->height() / 2 - 8, function ($font) use ($mysize) {
-                            $font->file(public_path('font/Lobster-Regular.ttf'));
-                            $font->size($mysize);
-                            $font->color('#ffffff');
-                            $font->align('center');
-                            $font->valign('top');
-                        });
-                        $img->save($path.'/'.$filename);
+            $img = Image::make($file)->resize($width = 300,  $height = 300);
+            $x = 11;//По Х і У не 0 , а зміщено до 11 і 2 , тому що в intervention image текст накладає /0,0/ з кута , так що з'їдає частину букви , тому зміщення таке
+            $y = 2;
+            $i = 0;
+            $xOffset = 23;
+            $yOffset = 23;
+            $width = 300;
+            $height = 300;
+            foreach ($strArray as $key => $value){
+                    if ($i !== 0){
+                        $x = $x + $xOffset;
+                        if ($x >= $width){
+                            $x = 11;
+                            $y = $y + $yOffset;
+                        }
                     }
-                }
+                    if ($key % 2){
+                        $img ->text($value ,$x, $y, function ($font) use ($mysize) {
+                            $font->file(public_path('font/Lobster-Regular.ttf'));
+                            $font->size($mysize);
+                            $font->color('#000000');
+                            $font->align('center');
+                            $font->valign('top');
+                        });
+                    }else{
+                        $img ->text($value ,$x, $y, function ($font) use ($mysize) {
+                            $font->file(public_path('font/Lobster-Regular.ttf'));
+                            $font->size($mysize);
+                            $font->color('#ffffff');
+                            $font->align('center');
+                            $font->valign('top');
+                        });
+                    }
 
+                    $i++;
             }
-
-
-
+            $img->save($path.'/'.$filename);
 
             if (!File::exists($path)) {
                 File::makeDirectory($path, 0777, true, true);
             }
-
 
             $image = Imageken::create([
                 'name' => $filename,
@@ -296,5 +117,6 @@ class AddImageController extends Controller
             return view('images.images_add',$data);
 
         }
+
     }
 }
